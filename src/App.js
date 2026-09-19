@@ -97,6 +97,9 @@ export class App extends Component {
           closeCart={this.closeCart}
         />
         <Switch>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
           <Route exact path="/shopping-cart/products/:productId">
             <ProductPage addToCart={this.addToCart} />
           </Route>

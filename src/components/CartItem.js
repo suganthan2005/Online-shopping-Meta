@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import PropTypes from "prop-types";
 import styles from "../css/CartItem.module.css";
 import { AnimatePresence, motion } from "framer-motion";
 

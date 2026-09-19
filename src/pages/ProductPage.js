@@ -84,6 +84,10 @@ const ProductPage = (props) => {
 
   const addToCart = () => {
     props.addToCart(product);
+    if (window.fbq) {
+      console.log("Meta Tracked: Add to cart");
+      window.fbq("track", "AddToCart");
+    }
   };
 
   const format = (amount) => {

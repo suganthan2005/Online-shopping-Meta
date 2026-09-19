@@ -20,20 +20,18 @@ export class App extends Component {
     };
   }
 
-  updateQuantity = async (productId, quantity) => {
-    const currentCart = this.state.cart;
-
+  updateQuantity = (productId, quantity) => {
     if (quantity === 0) {
-      await this.setState({
-        cart: currentCart.filter((item) => item.id !== productId),
+      this.setState({
+        cart: this.state.cart.filter((item) => item.id !== productId),
       });
     } else {
-      const product = currentCart.find((item) => item.id === productId);
-      product.quantity = quantity;
-      currentCart.map((item) => (item.id === productId ? product : null));
-      await this.setState({ cart: currentCart });
+      this.setState({
+        cart: this.state.cart.map((item) =>
+          item.id === productId ? { ...item, quantity } : item
+        ),
+      });
     }
-
     this.computeTotalPrice();
   };
 
@@ -43,26 +41,23 @@ export class App extends Component {
       const priceTotal = content.price * content.quantity;
       totalPrice += priceTotal;
     });
-    this.setState({ totalPrice: totalPrice.toFixed(2) });
+    this.setState({ totalPrice: totalPrice });
   };
 
-  addToCart = async (product) => {
-    const sameProduct = this.state.cart.filter(
+  addToCart = (product) => {
+    const sameProduct = this.state.cart.find(
       (productInCart) => productInCart.id === product.id
     );
-    const currentCart = this.state.cart;
-    if (sameProduct.length === 1) {
-      currentCart.map((productInCurrentCart) =>
-        productInCurrentCart.id === sameProduct[0].id
-          ? (productInCurrentCart.quantity = productInCurrentCart.quantity + 1)
-          : null
-      );
-      await this.setState({ cart: currentCart });
+    if (sameProduct) {
+      this.setState({
+        cart: this.state.cart.map((item) =>
+          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        ),
+      });
     } else {
-      const currentCart = this.state.cart;
-      const productObject = product;
-      productObject.quantity = 1;
-      await this.setState({ cart: [...currentCart, productObject] });
+      this.setState({
+        cart: [...this.state.cart, { ...product, quantity: 1 }],
+      });
     }
     this.computeTotalPrice();
     this.setState({ showCart: true });

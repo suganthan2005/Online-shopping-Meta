@@ -4,6 +4,13 @@ import styles from "../css/Cart.module.css";
 import SlideUpButton from "./SlideUpButton";
 import CartItem from "./CartItem";
 
+const trackPurchase = () => {
+  if (window.fbq) {
+    console.log("Meta: Purchase Tracked");
+    window.fbq("track", "Purchase");
+  }
+};
+
 const backdrop = {
   visible: { opacity: 1 },
   hidden: { opacity: 0 },
@@ -88,7 +95,10 @@ export default function Cart({
                         Subtotal: {format(totalPrice)}
                       </div>
                       <SlideUpButton
-                        onClick={closeCart}
+                        onClick={() => {
+                          trackPurchase();
+                          closeCart();
+                        }}
                         text="Checkout"
                         path="/shopping-cart"
                       />

@@ -11,7 +11,7 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.0",
+    "react-scripts": "^5.0.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
@@ -24,8 +24,31 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/__tests__/**/*",
+          "**/*.{spec,test}.*"
+        ],
+        "env": {
+          "jest": true
+        },
+        "globals": {
+          "expect": true,
+          "describe": true,
+          "it": true,
+          "beforeEach": true,
+          "afterEach": true,
+          "beforeAll": true,
+          "afterAll": true,
+          "jest": true,
+          "test": true,
+          "async": true,
+          "await": true
+        }
+      }
     ]
   },
   "browserslist": {
